@@ -37,17 +37,15 @@ Changelog:
 $user=OC_User::getUser();
 OC_Filesystem::init($user);
 
-echo $freeSpace=OC_Filesystem::free_space('/');
-echo 'OC_Filesystem is being used correctly';
-
 // inspired (= stolen) from settings/personal.php
 $rootInfo=OC_FileCache::get('');
 $used=$rootInfo['size'];
-$free=OC_Filesystem::free_space();
+$free=OC_Filesystem::free_space('/');
 $total=$free+$used;
 if($total==0) $total=1;  // prevent division by zero
 $relative=intval(round(($used/$total)*10000)/100);
 $quota_display=$relative;
+error_log(var_export($relative, true));
 
 OCP\App::addNavigationEntry( array( 'id' => 'quotabar', 'order' => 74, 'href' => OCP\Util::linkTo( '', 'index.php' ), 'icon' => OCP\Util::imagePath( 'quotabar', 'hdd.png' ),'name' => '<div style="height:1.5em;"><div id="quotabar" style="float:left;height:1em; width:70%;"></div><div id="quotabar_value" style="width:20%;float:right;font-size:80%;height:1em;font-weight:bold;">'.$quota_display.'%</div></div><script>$("#quotabar").progressbar({ value : '.$relative.'});</script>' ));
 
