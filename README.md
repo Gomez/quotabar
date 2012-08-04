@@ -1,4 +1,4 @@
-# quotabar for ownCloud
+# Quota Bar for ownCloud
 
 It adds a quota to your ownCloud navigation:
 
