@@ -25,6 +25,15 @@
 /*
 Changelog:
 
+
+ */
+
+
+
+
+
+/*
+0.4 Fixed quota space except shared files
 0.3 Made OC4 compatible
 
 0.2 Fixed divide by zero error
@@ -32,15 +41,36 @@ Changelog:
 0.1 initial release
 
 */
-
+#########################################
 if (!(OCP\Config::getUserValue(OCP\USER::getUser(), "quotabar", "quotabar_enabled") == null || OCP\Config::getUserValue(OCP\USER::getUser(), 'quotabar', 'quotabar_enabled') == '0')){
 
 $user=OC_User::getUser();
 OC_Filesystem::init($user);
 
+if (OC_FileCache::inCache('/Shared')) {
+	   $sharedInfo=OC_FileCache::get('/Shared');
+} else {
+	   $sharedInfo = null;
+}
+
+$userQuota=-1;
+$userQuota=OC_Preferences::getValue(OC_User::getUser(),'files','quota','default');
+if($userQuota=='default'){
+	   $userQuota=OC_AppConfig::getValue('files','default_quota','none');
+}
+if($userQuota=='none'){
+	   $userQuota=0;
+}else{
+	   $userQuota=OC_Helper::computerFileSize($userQuota);
+}
+$usedSpace=isset($rootInfo['size'])?$rootInfo['size']:0;
+
+$usedSpace=isset($sharedInfo['size'])?$usedSpace-$sharedInfo['size']:$usedSpace;
+#########################################
+
 // inspired (= stolen) from settings/personal.php
 $rootInfo=OC_FileCache::get('');
-$used=$rootInfo['size'];
+$used=$rootInfo['size']-$sharedInfo['size'];
 $free=OC_Filesystem::free_space('/');
 $total=$free+$used;
 if($total==0) $total=1;  // prevent division by zero
