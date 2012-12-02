@@ -15,7 +15,19 @@ It adds a quota to your ownCloud navigation:
     
 2. From your browser go to the ownCloud apps page (`/settings/apps.php`) and enable the "quotabar" app.
 
-3. Go to the Personal page (`/settings/personal.php`) and turn it on: "Enable Quotabar"
+# Changelog
+
+0.5 Enabled by default
+
+0.4 Fixed quota space except shared files
+
+0.3 Made OC4 compatible
+
+0.2 Fixed divide by zero error
+
+0.1 initial release
+
+# Credits
 
 Credits to the original author Simon Kainz, who started this addon.
 

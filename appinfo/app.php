@@ -25,15 +25,10 @@
 /*
 Changelog:
 
+0.5 Enabled by default
 
- */
-
-
-
-
-
-/*
 0.4 Fixed quota space except shared files
+
 0.3 Made OC4 compatible
 
 0.2 Fixed divide by zero error
@@ -42,7 +37,13 @@ Changelog:
 
 */
 #########################################
-if (!(OCP\Config::getUserValue(OCP\USER::getUser(), "quotabar", "quotabar_enabled") == null || OCP\Config::getUserValue(OCP\USER::getUser(), 'quotabar', 'quotabar_enabled') == '0')){
+
+//If value not set, set to defaul "true"
+if(OCP\Config::getUserValue(OCP\USER::getUser(), "quotabar", "quotabar_enabled") == null){
+    OCP\Config::setUserValue(OCP\USER::getUser(), "quotabar", "quotabar_enabled", 1);
+}
+
+if (OCP\Config::getUserValue(OCP\USER::getUser(), 'quotabar', 'quotabar_enabled') == '1'){
 
 $user=OC_User::getUser();
 OC_Filesystem::init($user);

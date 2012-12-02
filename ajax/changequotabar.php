@@ -18,7 +18,8 @@ if(isset($_POST['quotabar_enabled'])){
 }
 $username = OCP\USER::getUser();
 if($username){
-	OC_Preferences::setValue($username,'quotabar','quotabar_enabled',!($qb_enabled));
+    error_log(var_export("test".$qb_enabled, true));
+	OC_Preferences::setValue($username,'quotabar','quotabar_enabled',($qb_enabled == '1' ? 0 : 1));
 	OC_JSON::success(array("data" => array( "message" => $l->t("Quotabar enabled") )));
 }
 
