@@ -17,6 +17,8 @@ It adds a quota to your ownCloud navigation:
 
 # Changelog
 
+0.6 Fixed space clac & round to full percent
+
 0.5 Enabled by default
 
 0.4 Fixed quota space except shared files

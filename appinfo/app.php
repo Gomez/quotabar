@@ -25,6 +25,8 @@
 /*
 Changelog:
 
+0.6 Fixed space clac & round to full percent
+
 0.5 Enabled by default
 
 0.4 Fixed quota space except shared files
@@ -71,15 +73,16 @@ $usedSpace=isset($sharedInfo['size'])?$usedSpace-$sharedInfo['size']:$usedSpace;
 
 // inspired (= stolen) from settings/personal.php
 $rootInfo=OC_FileCache::get('');
-$used=$rootInfo['size']-$sharedInfo['size'];
-$free=OC_Filesystem::free_space('/');
+$sharedInfo=OC_FileCache::get('/Shared');
+$used=$rootInfo['size'];
+if($used<0) $used=0;
+$free=OC_Filesystem::free_space();
 $total=$free+$used;
 if($total==0) $total=1;  // prevent division by zero
-$relative=intval(round(($used/$total)*10000)/100);
+$relative=round((($used/$total)*10000)/100);
 $quota_display=$relative;
 
 OCP\App::addNavigationEntry( array( 'id' => 'quotabar', 'order' => 74, 'href' => OCP\Util::linkTo( '', 'index.php' ), 'icon' => OCP\Util::imagePath( 'quotabar', 'hdd.png' ),'name' => '<div style="height:1.5em;"><div id="quotabar" style="float:left;height:1em; width:70%;"></div><div id="quotabar_value" style="width:20%;float:right;font-size:80%;height:1em;font-weight:bold;">'.$quota_display.'%</div></div><script>$("#quotabar").progressbar({ value : '.$relative.'});</script>' ));
-
 }
 
 OCP\App::registerPersonal('quotabar', 'settings');
