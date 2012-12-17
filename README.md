@@ -17,7 +17,7 @@ It adds a quota to your ownCloud navigation:
 
 # Changelog
 
-0.6 Fixed space clac & round to full percent
+0.6 Fixed space calc & round to full percent
 
 0.5 Enabled by default
 
