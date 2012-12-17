@@ -3,7 +3,7 @@
 	<id>quotabar</id>
 	<name>Quota Bar</name>
 	<description>Displays quota usage in app menu</description>
-	<version>0.3</version>
+	<version>0.6</version>
 	<licence>AGPL (Icon taken from www.softicons.com, Icon Set "Rhon Icons" by Harenome Razanajato, GPL)</licence>
 	<author>Simon Kainz / Steffen Lindner</author>
 	<require>4</require>
