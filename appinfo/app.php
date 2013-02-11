@@ -82,7 +82,11 @@ if($total==0) $total=1;  // prevent division by zero
 $relative=round((($used/$total)*10000)/100);
 $quota_display=$relative;
 
-OCP\App::addNavigationEntry( array( 'id' => 'quotabar', 'order' => 74, 'href' => OCP\Util::linkTo( '', 'index.php' ), 'icon' => OCP\Util::imagePath( 'quotabar', 'hdd.png' ),'name' => '<div style="height:1.5em;"><div id="quotabar" style="float:left;height:1em; width:70%;"></div><div id="quotabar_value" style="width:20%;float:right;font-size:80%;height:1em;font-weight:bold;">'.$quota_display.'%</div></div><script>$("#quotabar").progressbar({ value : '.$relative.'});</script>' ));
+// make total numbers human readable
+$usedHuman=OC_Helper::humanFileSize($used);
+$totalHuman=OC_Helper::humanFileSize($total);
+
+OCP\App::addNavigationEntry( array( 'id' => 'quotabar', 'order' => 74, 'href' => OCP\Util::linkTo( '', 'index.php' ), 'icon' => OCP\Util::imagePath( 'quotabar', 'hdd.png' ),'name' => '<div title="'.$usedHuman.' of '.$totalHuman.'" style="height:1.5em;"><div id="quotabar" style="float:left;height:1em; width:70%;"></div><div id="quotabar_value" style="width:20%;float:right;font-size:80%;height:1em;font-weight:bold;">'.$quota_display.'%</div></div><script>$("#quotabar").progressbar({ value : '.$relative.'});</script>' ));
 }
 
 OCP\App::registerPersonal('quotabar', 'settings');
